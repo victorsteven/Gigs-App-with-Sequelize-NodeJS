@@ -8,6 +8,17 @@ import gigRoutes from './routes/gigs';
 
 const app = express();
 
+//Handlebars
+app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+app.set('view engine', 'handlebars');
+
+//body parser
+app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.get('/', (req, res) => res.render('index', {layout: 'landing'}));
+
 app.use('/gigs', gigRoutes);
 
 
@@ -20,8 +31,6 @@ db.authenticate()
 // app.get('/', (req, res) => {
 //  res.send('Index');
 // });
-
-
 
 const PORT = process .env.PORT || 3000;
 
